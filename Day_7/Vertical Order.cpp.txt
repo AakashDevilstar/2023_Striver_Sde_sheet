@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+
+vector<int> verticalOrderTraversal(TreeNode<int> *root){
+    vector<int> v;
+    if(root==NULL){
+      return v;
+    }
+    queue<pair<TreeNode<int>*,int>> q;
+    map<int,vector<int>> m;
+    q.push({root,0});
+    while(!q.empty()){
+        TreeNode<int> *temp=q.front().first;
+        int distance=q.front().second;
+        q.pop();
+        m[distance].push_back(temp->data);
+        if(temp->left){
+            q.push({temp->left,distance-1});
+        }
+        if(temp->right){
+            q.push({temp->right,distance+1});
+        }
+    }
+    for(auto it:m){
+      for (auto i:it.second) {
+        v.push_back(i);
+      }
+    }
+
+    return v;
+}
