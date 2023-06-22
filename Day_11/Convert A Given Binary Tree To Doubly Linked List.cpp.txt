@@ -1,0 +1,46 @@
+#include <bits/stdc++.h> 
+/*************************************************************
+ 
+    Following is the Binary Tree node structure
+
+    class BinaryTreeNode 
+    {
+    public : 
+        T data;
+        BinaryTreeNode<T> *left;
+        BinaryTreeNode<T> *right;
+
+        BinaryTreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+*************************************************************/
+
+void solve(BinaryTreeNode<int> *root,vector<int> &ans){
+    if(root==NULL){
+        return;
+    }
+    solve(root->left,ans);
+    ans.push_back(root->data);
+    solve(root->right,ans);
+}
+
+BinaryTreeNode<int>* BTtoDLL(BinaryTreeNode<int>* root) {
+    vector<int> ans;
+    solve(root,ans);
+    BinaryTreeNode<int> *head=new BinaryTreeNode<int>(-1);
+    BinaryTreeNode<int> *curr=head;
+    BinaryTreeNode<int> *prev=NULL;
+    for(auto it: ans){
+        BinaryTreeNode<int> *temp=new BinaryTreeNode<int>(it);
+        curr->right=temp;
+        curr->left=prev;
+        prev=curr;
+        curr=curr->right;
+    }
+    curr->right=NULL;
+    return head->right;
+}
