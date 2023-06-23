@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+
+void solve(int x,int y,vector<vector<int>> &image,int newc,int old){
+    if(x<0 || x>=image.size() || y<0 || y>=image[0].size() || image[x][y]!=old){
+        return;
+    }
+    image[x][y]=newc;
+    solve(x+1,y,image,newc,old);
+    solve(x-1,y,image,newc,old);
+    solve(x,y+1,image,newc,old);
+    solve(x,y-1,image,newc,old);
+}
+
+vector<vector<int>> floodFill(vector<vector<int>> &image, int x, int y, int newColor){
+    int oldc=image[x][y];
+    if(oldc==newColor){
+        return image;  
+    } 
+    int n=image.size();
+    int m=image[0].size();
+    solve(x,y,image,newColor,oldc);
+    return image;
+}
