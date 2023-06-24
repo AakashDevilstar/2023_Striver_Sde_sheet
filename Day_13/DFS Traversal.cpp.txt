@@ -1,0 +1,27 @@
+
+void solve(int curi,vector<int> adj[],vector<int> &curr,vector<int> &vis){
+    vis[curi]=1;
+    curr.push_back(curi);
+    for(auto it: adj[curi]){
+        if(!vis[it]){
+            solve(it,adj,curr,vis);
+        }
+    }
+} 
+
+vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges){
+    vector<int> adj[V],vis(V);
+    for(auto it: edges){
+        adj[it[0]].push_back(it[1]);
+        adj[it[1]].push_back(it[0]);
+    }
+    vector<vector<int>> ans;
+    for(int i=0;i<V;i++){
+        if(!vis[i]){
+            vector<int> curr;
+            solve(i,adj,curr,vis);
+            ans.push_back(curr);
+        }
+    }
+    return ans;
+}
