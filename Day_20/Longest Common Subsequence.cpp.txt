@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+
+int solve(string s,string t,int i,int j,vector<vector<int>> &dp){
+	if(i<0 || j<0){
+		return 0;
+	}
+	if(dp[i][j]!=-1){
+		return dp[i][j];
+	}
+	if(s[i]==t[j]){
+		return dp[i][j]=1+solve(s,t,i-1,j-1,dp);
+	}
+	else{
+		int pos1=solve(s,t,i-1,j,dp);
+		int pos2=solve(s,t,i,j-1,dp);
+		return dp[i][j]=max(pos1,pos2);
+	}
+}
+
+int lcs(string s, string t){
+	vector<vector<int>> dp(s.length(),vector<int>(t.length(),-1));
+	return solve(s,t,s.length()-1,t.length()-1,dp);
+}
