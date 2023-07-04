@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+
+long solve(int i,int *denominations, int n, int value,vector<vector<long>> &dp){
+    if(i==n){
+        if(value==0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    if(value<0){
+        return 0;
+    }
+    if(dp[i][value]!=-1){
+        return dp[i][value];
+    }
+    int op1=solve(i,denominations,n,value-denominations[i],dp);
+    int op2=solve(i+1,denominations,n,value,dp);
+    return dp[i][value]=op1+op2;
+}
+
+long countWaysToMakeChange(int *denominations, int n, int value){
+    int i=0;
+    vector<vector<long>> dp(n,vector<long>(value+1,-1));
+    return solve(i,denominations,n,value,dp);
+}
