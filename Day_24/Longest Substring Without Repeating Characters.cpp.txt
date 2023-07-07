@@ -1,0 +1,26 @@
+#include <bits/stdc++.h> 
+int uniqueSubstrings(string input){
+    int i=0;
+    int j=0;
+    int n=input.size();
+    unordered_map<char,int> mp;
+    int ans=0;
+    while(j<n){
+        mp[input[j]]++;
+        if(mp.size()==j-i+1){
+            ans=max(ans,j-i+1);
+            j++;
+        }
+        else if(j-i+1>mp.size()){
+            while(j-i+1>mp.size()){
+                mp[input[i]]--;
+                if(mp[input[i]]==0){
+                    mp.erase(input[i]);
+                }
+                i++;
+            }
+            j++;
+        }
+    }
+    return ans;
+}
