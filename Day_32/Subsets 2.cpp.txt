@@ -1,0 +1,20 @@
+#include <bits/stdc++.h> 
+void solve(int i,int n,vector<int> &arr,vector<vector<int>> &ans,vector<int> &curr){
+    ans.push_back(curr);
+    for(int ind=i;ind<n;ind++){
+        if(ind>i && arr[ind]==arr[ind-1]){
+            continue;
+        }
+        curr.push_back(arr[ind]);
+        solve(ind+1,n,arr,ans,curr);
+        curr.pop_back();
+    }
+}
+
+vector<vector<int>> uniqueSubsets(int n, vector<int> &arr){
+    vector<vector<int>> ans;
+    sort(arr.begin(),arr.end());
+    vector<int> curr;
+    solve(0,n,arr,ans,curr);
+    return ans;
+}
