@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+
+bool issafe(int row,int col,int digit,int matrix[9][9]){
+    for(int i=0;i<9;i++){
+        if(matrix[i][col]==digit && i!=row){
+            return false;
+        }
+        if(matrix[row][i]==digit && i!=col){
+            return false;
+        }
+    }
+    int x=row-(row%3);
+    int y=col-(col%3);
+    for(int i=0;i<3;i++){
+        for(int j=0;j<3;j++){
+            if(matrix[x+i][y+j]==digit && (x+i)!=row && (y+j)!=col){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool safe(int row,int col,int matrix[9][9]){
+    if(row==8 && col==9){
+        return true;
+    }
+    else{
+        if(col==9){
+            row+=1;
+            col=0;
+        }
+    }
+    if(matrix[row][col]!=0){
+        return safe(row,col+1,matrix);
+    }
+    if(matrix[row][col]==0){
+        for(int i=1;i<=9;i++){
+            if(issafe(row,col,i,matrix)){
+                matrix[row][col]=i;
+                if(safe(row,col+1,matrix)){
+                    return true;
+                }
+                matrix[row][col]=0;
+            }
+       }
+    }
+    return false;
+}
+
+bool isItSudoku(int matrix[9][9]) {
+    if(safe(0,0,matrix)){
+        return true;
+    }
+    return false;
+}
