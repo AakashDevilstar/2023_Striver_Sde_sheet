@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+
+stack<string> st;
+string a;
+string reverseString(string &str){
+	for(int i=0;i<str.size();i++){
+		if(str[i]!=' '){
+			a+=str[i];
+		}
+		if(str[i]==' '|| i==str.size()-1){
+			if(a.size()!=0){
+				st.push(a);
+				a.clear();
+			}
+		}
+	}
+	string ans;
+	while(!st.empty()){
+		ans+=st.top();
+		st.pop();
+		ans+=" ";
+	}
+	return ans;
+}
